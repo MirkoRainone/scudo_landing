@@ -96,7 +96,7 @@ HTML_TEMPLATE = """
                 <div class="bg-dark p-4 rounded border border-secondary shadow-lg">
                     <h6 class="text-white mb-3 fw-bold">🚀 Mettiti in lista per l'accesso anticipato</h6>
                     <form action="/iscriviti" method="post" class="d-flex flex-column flex-sm-row gap-2">
-                        <input type="email" name="email" class="form-control input-email bg-transparent text-white border-secondary" required placeholder="sviluppatore@azienda.com">
+                        <input type="text" name="email" class="form-control input-email bg-transparent text-white border-secondary" required placeholder="sviluppatore@azienda.com">
                         <button type="submit" class="btn btn-primary-gradient fw-bold px-4 text-white text-nowrap">Richiedi API Key</button>
                     </form>
                 </div>
