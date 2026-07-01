@@ -8,25 +8,19 @@ import httpx
 from dotenv import load_dotenv
 
 ssl_context = ssl.create_default_context(cafile=certifi.where())
-# Carica le variabili d'ambiente dal file .env (Immagine 3)
 load_dotenv()
 
-# 1. Importazione corretta del tuo WAF (Immagine 1)
 from scudo_waf import WafMiddleware
 
 app = FastAPI()
 
-# 2. La tua API Key di Scudo (Immagine 2)
 MOCK_API_KEY_SCUDO = "sk_live_123456789"
-
-# 3. Credenziali Supabase da variabili d'ambiente (Immagine 3)
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
 SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
 
-# Endpoint della tabella waitlist (Assicurati di creare una tabella 'waitlist' su Supabase)
 WAITLIST_ENDPOINT = f"{SUPABASE_URL}/rest/v1/waitlist" if SUPABASE_URL else ""
 
-# 🧠 ATTIVAZIONE DOGFOODING (Scudo protegge Scudo usando la tua chiave)
+# ATTIVAZIONE DOGFOODING
 app.add_middleware(WafMiddleware, api_key=MOCK_API_KEY_SCUDO)
 
 class IscrizioneForm(BaseModel):
@@ -40,108 +34,157 @@ async def aggiungi_sicurezza_headers(request: Request, call_next):
     response.headers["Strict-Transport-Security"] = "max-age=63072000; includeSubDomains"
     return response
 
-# 🎨 NUOVA VETRINA SAAS
+# 🎨 NUOVA VETRINA SAAS (Design Trust & Security)
 HTML_TEMPLATE = """
 <!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scudo WAF - Next-Gen Python Security</title>
+    <title>Scudo WAF | Sicurezza AI per Python</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #0b0f19; color: #f3f4f6; font-family: 'Inter', sans-serif; overflow-x: hidden; }
-        .navbar-brand { font-weight: 800; letter-spacing: -0.5px; }
-        .badge-ai { background: linear-gradient(45deg, #3b82f6, #8b5cf6); color: white; padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);}
-        .hero { padding: 80px 0 60px; }
-        .text-gradient { background: linear-gradient(45deg, #60a5fa, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        
-        /* Finto Terminale Mac/Linux */
-        .terminal-box { background-color: #011627; border: 1px solid #1e293b; border-radius: 12px; box-shadow: 0 15px 35px rgba(0,0,0,0.6); overflow: hidden; }
-        .terminal-header { background-color: #1e293b; padding: 12px 15px; display: flex; gap: 8px; align-items: center;}
-        .dot { width: 12px; height: 12px; border-radius: 50%; }
-        .dot-red { background-color: #ff5f56; }
-        .dot-yellow { background-color: #ffbd2e; }
-        .dot-green { background-color: #27c93f; }
-        .terminal-body { padding: 20px; font-family: 'Courier New', Courier, monospace; font-size: 0.95rem; color: #a6accd; text-align: left; line-height: 1.6;}
-        .cmd-prompt::before { content: "root@server:~# "; color: #3b82f6; }
-        .cmd-text { color: #addb67; }
-        
-        /* Card Vantaggi */
-        .feature-card { background: rgba(30, 41, 59, 0.4); border: 1px solid #1e293b; border-radius: 12px; padding: 30px; transition: all 0.3s ease; height: 100%;}
-        .feature-card:hover { transform: translateY(-5px); border-color: #3b82f6; background: rgba(30, 41, 59, 0.8); }
-        .feature-icon { font-size: 2.2rem; color: #60a5fa; margin-bottom: 20px; display: inline-block;}
-        
-        /* Form e Bottoni */
-        .btn-primary-gradient { background: linear-gradient(45deg, #2563eb, #7c3aed); border: none; transition: opacity 0.3s; }
-        .btn-primary-gradient:hover { opacity: 0.9; transform: scale(1.02); }
-        .input-email:focus { box-shadow: 0 0 0 0.25rem rgba(59, 130, 246, 0.25); border-color: #3b82f6; }
+        :root {
+            --bg-color: #ffffff;
+            --surface-color: #f8fafc;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --trust-blue: #0f172a;
+            --shield-red: #e11d48;
+            --shield-red-hover: #be123c;
+        }
+
+        body { 
+            background-color: var(--bg-color); 
+            color: var(--text-main); 
+            font-family: 'Inter', sans-serif; 
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Navbar */
+        .navbar { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border-bottom: 1px solid #e2e8f0; }
+        .navbar-brand { font-weight: 800; letter-spacing: -0.5px; color: var(--text-main) !important; }
+        .brand-icon { color: var(--shield-red); }
+        .badge-ai { background: rgba(225, 29, 72, 0.1); color: var(--shield-red); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; border: 1px solid rgba(225, 29, 72, 0.2);}
+
+        /* Hero Section */
+        .hero { padding: 100px 0 80px; }
+        .hero h1 { font-weight: 800; letter-spacing: -1px; line-height: 1.1; color: var(--trust-blue); }
+        .text-highlight { color: var(--shield-red); }
+        .hero-subtitle { font-size: 1.15rem; color: var(--text-muted); font-weight: 400; line-height: 1.6; }
+
+        /* Form di iscrizione */
+        .waitlist-box { background-color: var(--surface-color); border: 1px solid #e2e8f0; border-radius: 16px; padding: 2rem; box-shadow: 0 20px 40px -15px rgba(0,0,0,0.05); }
+        .input-email { border: 1px solid #cbd5e1; padding: 0.75rem 1rem; border-radius: 8px; font-weight: 500;}
+        .input-email:focus { box-shadow: 0 0 0 4px rgba(225, 29, 72, 0.1); border-color: var(--shield-red); }
+        .btn-primary-red { background-color: var(--shield-red); border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; transition: all 0.2s; color: white;}
+        .btn-primary-red:hover { background-color: var(--shield-red-hover); transform: translateY(-1px); box-shadow: 0 10px 15px -3px rgba(225, 29, 72, 0.2); color: white;}
+
+        /* Terminale Sviluppatori */
+        .terminal-box { background-color: #0f172a; border-radius: 12px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); overflow: hidden; border: 1px solid #1e293b;}
+        .terminal-header { background-color: #1e293b; padding: 12px 16px; display: flex; gap: 8px; align-items: center;}
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .terminal-body { padding: 24px; font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 0.9rem; color: #e2e8f0; line-height: 1.7;}
+        .code-comment { color: #64748b; }
+        .code-keyword { color: #f43f5e; }
+        .code-string { color: #10b981; }
+
+        /* Sezione Come Funziona */
+        .section-title { font-weight: 800; color: var(--trust-blue); letter-spacing: -0.5px; margin-bottom: 1rem; }
+        .feature-card { background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 2rem; height: 100%; transition: all 0.3s; }
+        .feature-card:hover { border-color: #cbd5e1; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1); transform: translateY(-3px); }
+        .icon-box { width: 48px; height: 48px; border-radius: 10px; background: rgba(225, 29, 72, 0.1); color: var(--shield-red); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 1.5rem; }
+        .feature-title { font-weight: 700; font-size: 1.2rem; margin-bottom: 0.75rem; color: var(--trust-blue); }
+        .feature-text { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; mb-0 }
+
+        /* Trust Banner */
+        .trust-banner { background-color: var(--surface-color); border-top: 1px solid #e2e8f0; padding: 40px 0; text-align: center;}
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-dark pt-4 mb-4">
-        <div class="container d-flex justify-content-between align-items-center">
-            <a class="navbar-brand text-white fs-4" href="#">🛡️ Scudo<span class="text-primary">WAF</span></a>
-            <span class="badge-ai">v1.1.2 Online</span>
+    <nav class="navbar fixed-top">
+        <div class="container d-flex justify-content-between align-items-center py-1">
+            <a class="navbar-brand fs-4" href="#"><i class="bi bi-shield-fill-check brand-icon me-2"></i>ScudoWAF</a>
+            <span class="badge-ai"><i class="bi bi-robot me-1"></i> AI Engine v1.2</span>
         </div>
     </nav>
 
     <div class="container hero">
-        <div class="row align-items-center mb-5">
-            <div class="col-lg-6 text-start mb-5 mb-lg-0 pe-lg-5">
-                <h1 class="display-4 fw-bold text-white mb-4">L'unico WAF AI che si installa in <span class="text-gradient">2 righe di codice.</span></h1>
-                <p class="lead text-secondary mb-5">Proteggi le tue app Python da XSS, SQL Injection e attacchi Zero-Day senza impazzire con le regole cloud. L'Intelligenza Artificiale fa il lavoro sporco per te.</p>
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6 text-start pe-lg-4">
+                <h1 class="display-4 mb-4">La sicurezza della tua API Python, <span class="text-highlight">automatizzata.</span></h1>
+                <p class="hero-subtitle mb-5">Un Web Application Firewall intelligente che impara e si adatta. Proteggi le tue app FastAPI, Flask e Django da XSS, SQL Injection e attacchi Zero-Day senza scrivere una singola regola Regex.</p>
                 
-                <div class="bg-dark p-4 rounded border border-secondary shadow-lg">
-                    <h6 class="text-white mb-3 fw-bold">🚀 Mettiti in lista per l'accesso anticipato</h6>
+                <div class="waitlist-box">
+                    <h6 class="fw-bold mb-3 d-flex align-items-center gap-2">
+                        <i class="bi bi-key-fill text-muted"></i> Ottieni la tua API Key gratuita
+                    </h6>
                     <form action="/iscriviti" method="post" class="d-flex flex-column flex-sm-row gap-2">
-                        <input type="text" name="email" class="form-control input-email bg-transparent text-white border-secondary" required placeholder="sviluppatore@azienda.com">
-                        <button type="submit" class="btn btn-primary-gradient fw-bold px-4 text-white text-nowrap">Richiedi API Key</button>
+                        <input type="email" name="email" class="form-control input-email flex-grow-1" required placeholder="sviluppatore@azienda.com">
+                        <button type="submit" class="btn btn-primary-red text-nowrap">Richiedi Accesso</button>
                     </form>
+                    <p class="text-muted mt-3 mb-0" style="font-size: 0.8rem;"><i class="bi bi-shield-lock me-1"></i> Nessuna carta di credito richiesta. Installazione in 30 secondi.</p>
                 </div>
             </div>
 
             <div class="col-lg-6">
                 <div class="terminal-box">
                     <div class="terminal-header">
-                        <div class="dot dot-red"></div>
-                        <div class="dot dot-yellow"></div>
-                        <div class="dot dot-green"></div>
+                        <div class="dot" style="background-color: #ff5f56;"></div>
+                        <div class="dot" style="background-color: #ffbd2e;"></div>
+                        <div class="dot" style="background-color: #27c93f;"></div>
                     </div>
                     <div class="terminal-body">
-                        <div class="cmd-prompt"><span class="cmd-text">pip install scudo-waf</span></div>
-                        <div class="text-secondary mt-3"># Proteggi la tua app FastAPI all'istante</div>
-                        <div><span style="color: #c792ea;">from</span> scudo_waf <span style="color: #c792ea;">import</span> WafMiddleware</div>
-                        <div class="mt-2">app.add_middleware(WafMiddleware, api_key=<span style="color: #ecc48d;">"sk_live_83b..."</span>)</div>
+                        <div><span style="color: #3b82f6;">~</span> pip install scudo-waf</div>
                         <br>
-                        <div style="color: #82aaff;">[INFO] Inizializzazione Rete Neurale... OK</div>
-                        <div style="color: #27c93f;">[SEC] WAF Attivo. I tuoi endpoint sono un bunker.</div>
+                        <div class="code-comment"># Inizializza l'app FastAPI (o Flask/Django)</div>
+                        <div><span class="code-keyword">from</span> fastapi <span class="code-keyword">import</span> FastAPI</div>
+                        <div><span class="code-keyword">from</span> scudo_waf <span class="code-keyword">import</span> WafMiddleware</div>
+                        <br>
+                        <div>app = FastAPI()</div>
+                        <br>
+                        <div class="code-comment"># Aggiungi lo scudo: fine del lavoro.</div>
+                        <div>app.add_middleware(</div>
+                        <div>&nbsp;&nbsp;&nbsp;&nbsp;WafMiddleware,</div>
+                        <div>&nbsp;&nbsp;&nbsp;&nbsp;api_key=<span class="code-string">"sk_live_83b..."</span></div>
+                        <div>)</div>
+                        <br>
+                        <div style="color: #10b981;">[✓] Neural Engine Inizializzato</div>
+                        <div style="color: #10b981;">[✓] Endpoint blindati. Traffico in monitoraggio.</div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="row mt-5 pt-5 text-start g-4 border-top border-secondary">
-            <div class="col-md-4">
-                <div class="feature-card">
-                    <i class="bi bi-robot feature-icon"></i>
-                    <h4 class="text-white fw-bold">Motore AI Nativo</h4>
-                    <p class="text-secondary mb-0">Dimentica le Regex. Il nostro modello comprende l'intento malevolo del payload, bloccando minacce moderne come la Prompt Injection.</p>
+    <div class="trust-banner mt-5">
+        <div class="container">
+            <h2 class="section-title text-center mb-5">Perché scegliere un WAF basato sull'Intelligenza Artificiale?</h2>
+            <div class="row g-4 text-start">
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="icon-box"><i class="bi bi-cpu"></i></div>
+                        <h4 class="feature-title">Oltre le Regex</h4>
+                        <p class="feature-text">I WAF tradizionali si basano su liste di regole infinite e difficili da mantenere. Il nostro modello NLP comprende il <em>contesto</em> della richiesta, bloccando attacchi moderni come le Prompt Injections.</p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="feature-card">
-                    <i class="bi bi-lightning-charge feature-icon"></i>
-                    <h4 class="text-white fw-bold">Fail-Open Sicuro</h4>
-                    <p class="text-secondary mb-0">L'analisi asincrona avviene in millisecondi. Se l'IA va in timeout, il traffico passa: non bloccheremo mai i tuoi clienti reali.</p>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="icon-box"><i class="bi bi-speedometer2"></i></div>
+                        <h4 class="feature-title">Latenza Zero (Fail-Open)</h4>
+                        <p class="feature-text">Progettato per non rallentare il tuo business. L'ispezione dei pacchetti avviene in millisecondi in background. In caso di disconnessione, il traffico legittimo non viene mai interrotto.</p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="feature-card">
-                    <i class="bi bi-shield-check feature-icon"></i>
-                    <h4 class="text-white fw-bold">Difesa in Profondità</h4>
-                    <p class="text-secondary mb-0">Blocca la spazzatura al cancello. Lascia che Pydantic e le tue logiche di business gestiscano solo il traffico genuino e pulito.</p>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="icon-box"><i class="bi bi-bug"></i></div>
+                        <h4 class="feature-title">Falsi Positivi Ridotti</h4>
+                        <p class="feature-text">Smettila di bloccare clienti legittimi a causa di regole troppo restrittive. L'AI impara dai pattern di traffico sani della tua applicazione, adattando il livello di tolleranza dinamicamente.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -168,23 +211,24 @@ async def gestisci_iscrizione(email: str = Form(...)):
         }
         
         async with httpx.AsyncClient(verify=ssl_context) as client:
-            # Salvataggio nella tabella waitlist
             risposta = await client.post(
                 WAITLIST_ENDPOINT,
                 json={"cliente_email": dati_validati.email},
                 headers=headers_supabase
             )
             
-            # Se la tabella waitlist non esiste o c'è un errore in Supabase
             if risposta.status_code >= 400:
                 print(f"Errore Supabase: {risposta.text}")
                 return HTMLResponse(content="<h3>Errore interno: impossibile salvare l'iscrizione.</h3>", status_code=500)
 
+        # Pagina di successo migliorata stilisticamente per restare in tema
         return HTMLResponse(content="""
-        <html><body style='background:#0b0f19; color:white; text-align:center; padding:100px; font-family:sans-serif;'>
-        <h2>🎉 Ti sei iscritto con successo!</h2>
-        <p style='color:#a6accd;'>Ti contatteremo presto con la tua API Key.</p>
-        <a href='/' style='color:#3b82f6; text-decoration:none; font-weight:bold;'>Torna alla Home</a>
+        <html><body style='background:#f8fafc; color:#0f172a; text-align:center; padding:100px; font-family:sans-serif;'>
+        <div style='max-width: 500px; margin: 0 auto; background: white; padding: 40px; border-radius: 16px; border: 1px solid #e2e8f0; box-shadow: 0 20px 40px -15px rgba(0,0,0,0.05);'>
+            <h2 style='color: #10b981;'>🎉 Ti sei iscritto con successo!</h2>
+            <p style='color:#64748b; margin-top: 15px; margin-bottom: 30px;'>Abbiamo registrato la tua richiesta. Ti contatteremo presto con la tua API Key e le istruzioni di setup.</p>
+            <a href='/' style='background-color:#e11d48; color:white; text-decoration:none; font-weight:bold; padding: 12px 24px; border-radius: 8px;'>Torna alla Home</a>
+        </div>
         </body></html>
         """)
     except Exception as e:
