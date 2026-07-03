@@ -25,6 +25,7 @@ app.add_middleware(WafMiddleware, api_key=MOCK_API_KEY_SCUDO)
 
 class IscrizioneForm(BaseModel):
     email: EmailStr
+    piano: str 
 
 @app.middleware("http")
 async def aggiungi_sicurezza_headers(request: Request, call_next):
@@ -77,12 +78,17 @@ HTML_TEMPLATE = """
         .text-highlight { color: var(--shield-red); }
         .hero-subtitle { font-size: 1.15rem; color: var(--text-muted); font-weight: 400; line-height: 1.6; }
 
-        /* Form di iscrizione */
+        /* Form di iscrizione e Box Piani */
         .waitlist-box { background-color: var(--surface-color); border: 1px solid #e2e8f0; border-radius: 16px; padding: 2rem; box-shadow: 0 20px 40px -15px rgba(0,0,0,0.05); }
         .input-email { border: 1px solid #cbd5e1; padding: 0.75rem 1rem; border-radius: 8px; font-weight: 500;}
         .input-email:focus { box-shadow: 0 0 0 4px rgba(225, 29, 72, 0.1); border-color: var(--shield-red); }
         .btn-primary-red { background-color: var(--shield-red); border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; transition: all 0.2s; color: white;}
         .btn-primary-red:hover { background-color: var(--shield-red-hover); transform: translateY(-1px); box-shadow: 0 10px 15px -3px rgba(225, 29, 72, 0.2); color: white;}
+        .btn-pro { background-color: var(--trust-blue); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; transition: all 0.2s;}
+        .btn-pro:hover { background-color: #1e293b; transform: translateY(-1px); box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.2); color: white;}
+        .plan-badge { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; padding: 4px 8px; border-radius: 4px; margin-bottom: 0.5rem; display: inline-block; }
+        .badge-free { background-color: rgba(16, 185, 129, 0.1); color: #10b981; }
+        .badge-pro { background-color: rgba(15, 23, 42, 0.1); color: var(--trust-blue); }
 
         /* Terminale Sviluppatori */
         .terminal-box { background-color: #0f172a; border-radius: 12px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); overflow: hidden; border: 1px solid #1e293b;}
@@ -99,7 +105,7 @@ HTML_TEMPLATE = """
         .feature-card:hover { border-color: #cbd5e1; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1); transform: translateY(-3px); }
         .icon-box { width: 48px; height: 48px; border-radius: 10px; background: rgba(225, 29, 72, 0.1); color: var(--shield-red); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 1.5rem; }
         .feature-title { font-weight: 700; font-size: 1.2rem; margin-bottom: 0.75rem; color: var(--trust-blue); }
-        .feature-text { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; mb-0 }
+        .feature-text { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
 
         /* Trust Banner */
         .trust-banner { background-color: var(--surface-color); border-top: 1px solid #e2e8f0; padding: 40px 0; text-align: center;}
@@ -119,15 +125,34 @@ HTML_TEMPLATE = """
                 <h1 class="display-4 mb-4">La sicurezza della tua API Python, <span class="text-highlight">automatizzata.</span></h1>
                 <p class="hero-subtitle mb-5">Un Web Application Firewall intelligente che impara e si adatta. Proteggi le tue app FastAPI, Flask e Django da XSS, SQL Injection e attacchi Zero-Day senza scrivere una singola regola Regex.</p>
                 
-                <div class="waitlist-box">
-                    <h6 class="fw-bold mb-3 d-flex align-items-center gap-2">
-                        <i class="bi bi-key-fill text-muted"></i> Ottieni la tua API Key gratuita
-                    </h6>
-                    <form action="/iscriviti" method="post" class="d-flex flex-column flex-sm-row gap-2">
-                        <input type="email" name="email" class="form-control input-email flex-grow-1" required placeholder="sviluppatore@azienda.com">
-                        <button type="submit" class="btn btn-primary-red text-nowrap">Richiedi Accesso</button>
-                    </form>
-                    <p class="text-muted mt-3 mb-0" style="font-size: 0.8rem;"><i class="bi bi-shield-lock me-1"></i> Nessuna carta di credito richiesta. Installazione in 30 secondi.</p>
+                <div class="row g-3">
+                    <!-- BOX PIANO FREEMIUM -->
+                    <div class="col-md-6">
+                        <div class="waitlist-box h-100">
+                            <span class="plan-badge badge-free">Freemium</span>
+                            <h6 class="fw-bold mb-2">Piano Sviluppatore</h6>
+                            <p class="text-muted small mb-3">Fino a 10K req/mese. Protezione base OWASP.</p>
+                            <form action="/iscriviti" method="post" class="d-flex flex-column gap-2">
+                                <input type="hidden" name="piano" value="freemium">
+                                <input type="email" name="email" class="form-control input-email" required placeholder="tu@email.com">
+                                <button type="submit" class="btn btn-primary-red w-100">Ottieni API Key Gratis</button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <!-- BOX PIANO PRO -->
+                    <div class="col-md-6">
+                        <div class="waitlist-box h-100" style="border-color: var(--trust-blue); background-color: white;">
+                            <span class="plan-badge badge-pro">Piano Pro</span>
+                            <h6 class="fw-bold mb-2">Per la Produzione</h6>
+                            <p class="text-muted small mb-3">Traffico illimitato. Anti-Bot L7 e regole Custom.</p>
+                            <form action="/iscriviti" method="post" class="d-flex flex-column gap-2">
+                                <input type="hidden" name="piano" value="pro">
+                                <input type="email" name="email" class="form-control input-email" required placeholder="team@azienda.com">
+                                <button type="submit" class="btn btn-pro w-100">Acquista Ora (€49/m)</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -220,7 +245,12 @@ async def gestisci_iscrizione(email: str = Form(...)):
             if risposta.status_code >= 400:
                 print(f"Errore Supabase: {risposta.text}")
                 return HTMLResponse(content="<h3>Errore interno: impossibile salvare l'iscrizione.</h3>", status_code=500)
-
+        # Risposte diverse in base al piano scelto
+        messaggio_successo = "Ti contatteremo presto con la tua API Key e le istruzioni di setup."
+        titolo_successo = "Richiesta ricevuta!"
+        if dati_validati.piano == "pro":
+             messaggio_successo = "Grazie per aver scelto il piano Pro! Ti contatteremo a breve per completare il pagamento e fornirti la chiave illimitata."
+             titolo_successo = "Benvenuto nel Piano Pro!"
         # Pagina di successo migliorata stilisticamente per restare in tema
         return HTMLResponse(content="""
         <html><body style='background:#f8fafc; color:#0f172a; text-align:center; padding:100px; font-family:sans-serif;'>
