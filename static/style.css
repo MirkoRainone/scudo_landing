@@ -4,8 +4,17 @@
     --text-main: #0f172a;
     --text-muted: #64748b;
     --trust-blue: #0f172a;
-    --shield-red: #e11d48;
-    --shield-red-hover: #be123c;
+    
+    /* ABBIAMO TRASFORMATO IL BRAND IN SMERALDO TECH */
+    --shield-red: #10b981;          /* Prima era #e11d48 (Rosso) */
+    --shield-red-hover: #059669;    /* Prima era #be123c (Rosso scuro) */
+    
+    --tech-emerald: #10b981;
+    --tech-emerald-hover: #059669;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
@@ -21,29 +30,24 @@ body {
 .brand-icon { color: var(--shield-red); }
 .badge-ai { background: rgba(225, 29, 72, 0.1); color: var(--shield-red); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; border: 1px solid rgba(225, 29, 72, 0.2); }
 
-/* Hero Section */
-.hero { padding: 100px 0 80px; }
+/* Hero Section & Tech Stack */
+.hero { padding: 100px 0 60px; }
 .hero h1 { font-weight: 800; letter-spacing: -1px; line-height: 1.1; color: var(--trust-blue); }
 .text-highlight { color: var(--shield-red); }
+.text-emerald { color: var(--tech-emerald) !important; }
 .hero-subtitle { font-size: 1.15rem; color: var(--text-muted); font-weight: 400; line-height: 1.6; }
-
-/* Form di iscrizione */
-.waitlist-box { background-color: var(--surface-color); border: 1px solid #e2e8f0; border-radius: 16px; padding: 2rem; box-shadow: 0 20px 40px -15px rgba(0,0,0,0.05); }
-.input-email { border: 1px solid #cbd5e1; padding: 0.75rem 1rem; border-radius: 8px; font-weight: 500; }
-.input-email:focus { box-shadow: 0 0 0 4px rgba(225, 29, 72, 0.1); border-color: var(--shield-red); }
-.btn-primary-red { background-color: var(--shield-red); border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; transition: all 0.2s; color: white; }
-.btn-primary-red:hover { background-color: var(--shield-red-hover); transform: translateY(-1px); box-shadow: 0 10px 15px -3px rgba(225, 29, 72, 0.2); color: white; }
+.tech-badge { background: #f1f5f9; color: #475569; font-weight: 600; font-size: 0.85rem; padding: 6px 14px; border-radius: 8px; border: 1px solid #e2e8f0; display: inline-flex; align-items: center; gap: 6px;}
 
 /* Terminale Sviluppatori */
 .terminal-box { background-color: #0f172a; border-radius: 12px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); overflow: hidden; border: 1px solid #1e293b; }
 .terminal-header { background-color: #1e293b; padding: 12px 16px; display: flex; gap: 8px; align-items: center; }
 .dot { width: 10px; height: 10px; border-radius: 50%; }
-.terminal-body { padding: 24px; font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 0.9rem; color: #e2e8f0; line-height: 1.7; }
+.terminal-body { padding: 24px; font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 0.9rem; color: #e2e8f0; line-height: 1.7; text-align: left; }
 .code-comment { color: #64748b; }
 .code-keyword { color: #f43f5e; }
 .code-string { color: #10b981; }
 
-/* Sezione Come Funziona */
+/* Sezioni e Card */
 .section-title { font-weight: 800; color: var(--trust-blue); letter-spacing: -0.5px; margin-bottom: 1rem; }
 .feature-card { background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 2rem; height: 100%; transition: all 0.3s; }
 .feature-card:hover { border-color: #cbd5e1; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1); transform: translateY(-3px); }
@@ -51,5 +55,39 @@ body {
 .feature-title { font-weight: 700; font-size: 1.2rem; margin-bottom: 0.75rem; color: var(--trust-blue); }
 .feature-text { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 0; }
 
-/* Trust Banner */
-.trust-banner { background-color: var(--surface-color); border-top: 1px solid #e2e8f0; padding: 40px 0; text-align: center; }
+/* Pricing Cards */
+.pricing-card { background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 2.5rem; height: 100%; transition: all 0.3s; position: relative; }
+.pricing-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -15px rgba(0,0,0,0.08); }
+.pricing-card.pro { border: 2px solid var(--tech-emerald); box-shadow: 0 20px 40px -15px rgba(16, 185, 129, 0.15); }
+.badge-pro { background-color: rgba(16, 185, 129, 0.1); color: var(--tech-emerald); font-weight: 700; font-size: 0.75rem; padding: 6px 12px; border-radius: 20px; border: 1px solid rgba(16, 185, 129, 0.3); text-transform: uppercase; letter-spacing: 0.5px;}
+.price-tag { font-size: 2.5rem; font-weight: 800; color: var(--trust-blue); }
+.feature-list { list-style: none; padding: 0; margin: 2rem 0; text-align: left; }
+.feature-list li { margin-bottom: 0.85rem; color: var(--text-muted); font-size: 0.95rem; display: flex; align-items: center; gap: 10px; }
+.feature-list li i.bi-check-circle-fill { color: var(--tech-emerald); }
+.feature-list li i.bi-x-circle { color: #cbd5e1; }
+
+/* Bottoni */
+.btn-primary-red { background-color: var(--shield-red); border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; transition: all 0.2s; color: white; }
+.btn-primary-red:hover { background-color: var(--shield-red-hover); transform: translateY(-1px); box-shadow: 0 10px 15px -3px rgba(225, 29, 72, 0.2); color: white; }
+.btn-emerald { background-color: var(--tech-emerald); border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; transition: all 0.2s; color: white; }
+.btn-emerald:hover { background-color: var(--tech-emerald-hover); transform: translateY(-1px); box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.3); color: white; }
+.btn-outline-dark { border-radius: 8px; font-weight: 600; padding: 0.75rem 1.5rem; }
+
+/* Form Sezione & Radio Card Interattive */
+.waitlist-section { background-color: var(--surface-color); border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0; padding: 80px 0; }
+.waitlist-box { background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 2.5rem; box-shadow: 0 20px 40px -15px rgba(0,0,0,0.05); max-width: 650px; margin: 0 auto; }
+.input-email { border: 1px solid #cbd5e1; padding: 0.85rem 1rem; border-radius: 8px; font-weight: 500; font-size: 1rem; }
+.input-email:focus { box-shadow: 0 0 0 4px rgba(225, 29, 72, 0.1); border-color: var(--shield-red); }
+
+/* Stile per i Radio Button a Card */
+.radio-card-input { display: none; }
+.radio-card-label { border: 2px solid #e2e8f0; border-radius: 10px; padding: 12px 16px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: space-between; font-weight: 600; color: var(--text-muted); background: var(--surface-color); }
+.radio-card-label:hover { border-color: #cbd5e1; }
+.radio-card-input:checked + .radio-card-label.free-label { border-color: var(--trust-blue); background: rgba(15, 23, 42, 0.05); color: var(--trust-blue); }
+.radio-card-input:checked + .radio-card-label.pro-label { border-color: var(--tech-emerald); background: rgba(16, 185, 129, 0.05); color: #065f46; }
+
+/* FAQ & Trust Banner */
+.trust-banner { background-color: var(--surface-color); border-top: 1px solid #e2e8f0; padding: 80px 0; text-align: center; }
+.accordion-item { border-radius: 10px !important; border: 1px solid #e2e8f0; margin-bottom: 12px; overflow: hidden; }
+.accordion-button { font-weight: 600; color: var(--trust-blue); background: white; box-shadow: none !important; }
+.accordion-button:not(.collapsed) { color: var(--tech-emerald); background: rgba(16, 185, 129, 0.05); }

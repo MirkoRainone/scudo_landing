@@ -1,210 +1,261 @@
 <!DOCTYPE html>
-
 <html lang="it">
-
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Scudo WAF | Sicurezza AI per Python</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scudo WAF | Sicurezza AI per Python</title>
     
-    <!-- Librerie esterne Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- IL NOSTRO FOGLIO DI STILE ESTERNO (Sintassi Jinja2 per FastAPI) -->
     <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
 </head>
-
-
-
 <body>
-
+    <!-- Navbar -->
     <nav class="navbar fixed-top">
-
         <div class="container d-flex justify-content-between align-items-center py-1">
-
             <a class="navbar-brand fs-4" href="#"><i class="bi bi-shield-fill-check brand-icon me-2"></i>ScudoWAF</a>
-
             <span class="badge-ai"><i class="bi bi-robot me-1"></i> AI Engine v1.2</span>
-
         </div>
-
     </nav>
 
-
-
+    <!-- Hero Section -->
     <div class="container hero">
-
         <div class="row align-items-center g-5">
-
             <div class="col-lg-6 text-start pe-lg-4">
-
                 <h1 class="display-4 mb-4">La sicurezza della tua API Python, <span class="text-highlight">automatizzata.</span></h1>
-
-                <p class="hero-subtitle mb-5">Un Web Application Firewall intelligente che impara e si adatta. Proteggi le tue app FastAPI, Flask e Django da XSS, SQL Injection e attacchi Zero-Day senza scrivere una singola regola Regex.</p>
-
-               
-
-                <div class="waitlist-box">
-
-                    <h6 class="fw-bold mb-3 d-flex align-items-center gap-2">
-
-                        <i class="bi bi-key-fill text-muted"></i> Ottieni la tua API Key gratuita
-
-                    </h6>
-
-                    <form action="/api/v1/iscriviti" method="post" class="d-flex flex-column flex-sm-row gap-2">
-
-                        <input type="email" name="email" class="form-control input-email flex-grow-1" required placeholder="sviluppatore@azienda.com">
-
-                        <button type="submit" class="btn btn-primary-red text-nowrap">Richiedi Accesso</button>
-
-                    </form>
-
-                    <p class="text-muted mt-3 mb-0" style="font-size: 0.8rem;"><i class="bi bi-shield-lock me-1"></i> Nessuna carta di credito richiesta. Installazione in 30 secondi.</p>
-
+                <p class="hero-subtitle mb-4">Un Web Application Firewall intelligente che impara e si adatta. Proteggi le tue app da XSS, SQL Injection e attacchi Zero-Day senza scrivere una singola regola Regex.</p>
+                
+                <!-- Tech Stack Bar -->
+                <div class="d-flex flex-wrap gap-2 mb-4">
+                    <span class="tech-badge"><i class="bi bi-lightning-fill text-warning"></i> FastAPI</span>
+                    <span class="tech-badge"><i class="bi bi-fire text-danger"></i> Flask</span>
+                    <span class="tech-badge"><i class="bi bi-box-fill text-success"></i> Django</span>
+                    <span class="tech-badge"><i class="bi bi-cpu-fill text-primary"></i> LangChain / LLM</span>
                 </div>
 
+                <div class="d-flex gap-3">
+                    <a href="#prezzi" class="btn btn-primary-red px-4 py-3 fs-6">Confronta i Piani</a>
+                    <a href="#form-iscrizione" class="btn btn-outline-dark px-4 py-3 fs-6">Richiedi Accesso</a>
+                </div>
             </div>
 
-
-
+            <!-- Terminale -->
             <div class="col-lg-6">
-
                 <div class="terminal-box">
-
                     <div class="terminal-header">
-
                         <div class="dot" style="background-color: #ff5f56;"></div>
-
                         <div class="dot" style="background-color: #ffbd2e;"></div>
-
                         <div class="dot" style="background-color: #27c93f;"></div>
-
                     </div>
-
                     <div class="terminal-body">
-
                         <div><span style="color: #3b82f6;">~</span> pip install scudo-waf</div>
-
                         <br>
-
-                        <div class="code-comment"># Inizializza l'app FastAPI (o Flask/Django)</div>
-
+                        <div class="code-comment"># Inizializza l'app con protezione AI</div>
                         <div><span class="code-keyword">from</span> fastapi <span class="code-keyword">import</span> FastAPI</div>
-
                         <div><span class="code-keyword">from</span> scudo_waf <span class="code-keyword">import</span> WafMiddleware</div>
-
                         <br>
-
                         <div>app = FastAPI()</div>
-
                         <br>
-
                         <div class="code-comment"># Aggiungi lo scudo: fine del lavoro.</div>
-
                         <div>app.add_middleware(</div>
-
                         <div>&nbsp;&nbsp;&nbsp;&nbsp;WafMiddleware,</div>
-
                         <div>&nbsp;&nbsp;&nbsp;&nbsp;api_key=<span class="code-string">"sk_live_83b..."</span></div>
-
                         <div>)</div>
-
                         <br>
-
                         <div style="color: #10b981;">[✓] Neural Engine Inizializzato</div>
-
-                        <div style="color: #10b981;">[✓] Endpoint blindati. Traffico in monitoraggio.</div>
-
+                        <div style="color: #10b981;">[✓] Prompt Injections & SQLi blindati.</div>
                     </div>
-
                 </div>
-
             </div>
-
         </div>
-
     </div>
 
-
-
-    <div class="trust-banner mt-5">
-
+    <!-- Sezione Perché l'AI? -->
+    <div class="trust-banner">
         <div class="container">
-
-            <h2 class="section-title text-center mb-5">Perché scegliere un WAF basato sull'Intelligenza Artificiale?</h2>
-
+            <h2 class="section-title text-center mb-5">Perché scegliere uno Scudo Ibrido basato sull'AI?</h2>
             <div class="row g-4 text-start">
-
                 <div class="col-md-4">
-
                     <div class="feature-card">
-
                         <div class="icon-box"><i class="bi bi-cpu"></i></div>
-
-                        <h4 class="feature-title">Oltre le Regex</h4>
-
-                        <p class="feature-text">I WAF tradizionali si basano su liste di regole infinite e difficili da mantenere. Il nostro modello NLP comprende il <em>contesto</em> della richiesta, bloccando attacchi moderni come le Prompt Injections.</p>
-
+                        <h4 class="feature-title">Protezione App AI / LLM</h4>
+                        <p class="feature-text">I WAF tradizionali sono ciechi contro gli attacchi linguistici. Il nostro modello NLP intercetta le <em>Prompt Injections</em> e i Jailbreak prima che raggiungano i tuoi modelli linguistici.</p>
                     </div>
-
                 </div>
-
                 <div class="col-md-4">
-
                     <div class="feature-card">
-
                         <div class="icon-box"><i class="bi bi-speedometer2"></i></div>
-
-                        <h4 class="feature-title">Latenza Zero (Fail-Open)</h4>
-
-                        <p class="feature-text">Progettato per non rallentare il tuo business. L'ispezione dei pacchetti avviene in millisecondi in background. In caso di disconnessione, il traffico legittimo non viene mai interrotto.</p>
-
+                        <h4 class="feature-title">Latenza 0.1ms (Fail-Open)</h4>
+                        <p class="feature-text">Progettato per non rallentare il tuo business. Il traffico noto viene filtrato dalla RAM locale istantaneamente. In caso di disconnessione di rete, l'app non viene mai bloccata.</p>
                     </div>
-
                 </div>
-
                 <div class="col-md-4">
-
                     <div class="feature-card">
-
                         <div class="icon-box"><i class="bi bi-bug"></i></div>
-
-                        <h4 class="feature-title">Falsi Positivi Ridotti</h4>
-
-                        <p class="feature-text">Smettila di bloccare clienti legittimi a causa di regole troppo restrittive. L'AI impara dai pattern di traffico sani della tua applicazione, adattando il livello di tolleranza dinamicamente.</p>
-
+                        <h4 class="feature-title">Zero-Day Anomaly Detection</h4>
+                        <p class="feature-text">Smettila di bloccare clienti legittimi. L'AI impara dalla struttura del tuo traffico sano (Sequence Modeling), bloccando manipolazioni di ID e API esterne prive di regole Regex.</p>
                     </div>
-
                 </div>
-
             </div>
-
         </div>
-
     </div>
 
-</body>
+    <!-- Sezione PREZZI & PIANI -->
+    <div id="prezzi" class="container py-5 my-5">
+        <div class="text-center max-w-2xl mx-auto mb-5">
+            <h2 class="section-title display-6">Scegli il livello di protezione per la tua API</h2>
+            <p class="text-muted">Inizia gratis nel tuo ambiente di test, scala in produzione con il Neural Engine completo.</p>
+        </div>
 
+        <div class="row g-4 justify-content-center align-items-stretch">
+            <!-- PIANO FREE -->
+            <div class="col-lg-5">
+                <div class="pricing-card">
+                    <h4 class="fw-bold text-uppercase text-muted mb-2" style="font-size: 0.9rem;">Piano Free</h4>
+                    <div class="price-tag mb-1">€0 <span class="fs-6 text-muted fw-normal">/ per sempre</span></div>
+                    <p class="text-muted small mb-4">Perfetto per test locali, MVP e progetti personali.</p>
+                    
+                    <button onclick="scegliPiano('free')" class="btn btn-outline-dark w-100 py-2 mb-4">Seleziona Free</button>
+                    
+                    <hr style="border-color: #e2e8f0;">
+                    <ul class="feature-list">
+                        <li><i class="bi bi-check-circle-fill"></i> Fino a <strong>50.000 richieste web</strong> / mese</li>
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>5.000 ispezioni AI</strong> / mese (Light Neural Engine)</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Scudo Locale Istantaneo (SQLi, XSS, LFI)</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Protezione Bot & Spam base</li>
+                        <li><i class="bi bi-x-circle"></i> <span class="text-muted text-decoration-line-through">Anomaly Detection (Zero-Day & BOLA)</span></li>
+                        <li><i class="bi bi-x-circle"></i> <span class="text-muted text-decoration-line-through">SLA 99.9% Latenza Zero</span></li>
+                        <li><i class="bi bi-check-circle-fill"></i> Supporto Community Discord</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- PIANO PRO -->
+            <div class="col-lg-5">
+                <div class="pricing-card pro">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h4 class="fw-bold text-uppercase text-emerald mb-0" style="font-size: 0.9rem;">Piano Pro</h4>
+                        <span class="badge-pro">🔥 Consigliato per AI Apps</span>
+                    </div>
+                    <div class="price-tag mb-1">Waitlist <span class="fs-6 text-muted fw-normal">/ tariffe bloccate</span></div>
+                    <p class="text-muted small mb-4">Per API in produzione, startup e applicazioni LLM critiche.</p>
+                    
+                    <button onclick="scegliPiano('pro')" class="btn btn-emerald w-100 py-2 mb-4">Richiedi Accesso Pro</button>
+                    
+                    <hr style="border-color: #e2e8f0;">
+                    <ul class="feature-list">
+                        <li><i class="bi bi-check-circle-fill"></i> Fino a <strong>5.000.000 richieste</strong> + Pay-as-you-go</li>
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>Ispezioni AI Illimitate</strong> (Full Neural Engine)</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Scudo Locale Istantaneo (SQLi, XSS, LFI)</li>
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>Protezione Advanced Prompt Injection per LLM</strong></li>
+                        <li><i class="bi bi-check-circle-fill"></i> <strong>Anomaly Detection per API & BOLA</strong></li>
+                        <li><i class="bi bi-check-circle-fill"></i> SLA 99.9% con garanzia Zero Latenza</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Canale Slack Dedicato & Priorità Email</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FORM DI ISCRIZIONE CON AUTO-SELEZIONE -->
+    <div id="form-iscrizione" class="waitlist-section">
+        <div class="container text-center">
+            <div class="waitlist-box">
+                <h3 class="fw-bold mb-2">Ottieni la tua API Key immediata</h3>
+                <p class="text-muted mb-4">Nessuna carta di credito richiesta. Rilascio istantaneo via email per iniziare i test.</p>
+                
+                <form action="/api/v1/iscriviti" method="post" class="text-start">
+                    
+                    <!-- Selezione Piano (Radio Card Interattive) -->
+                    <label class="form-label fw-bold small text-muted text-uppercase mb-2">1. Conferma il Piano desiderato:</label>
+                    <div class="row g-3 mb-4">
+                        <div class="col-6">
+                            <input type="radio" id="piano_free" name="piano_scelto" value="free" class="radio-card-input" checked>
+                            <label for="piano_free" class="radio-card-label free-label w-100">
+                                <span><i class="bi bi-shield me-2"></i>Piano Free</span>
+                                <i class="bi bi-check-circle-fill fs-5"></i>
+                            </label>
+                        </div>
+                        <div class="col-6">
+                            <input type="radio" id="piano_pro" name="piano_scelto" value="pro" class="radio-card-input">
+                            <label for="piano_pro" class="radio-card-label pro-label w-100">
+                                <span><i class="bi bi-lightning-charge-fill me-2"></i>Piano Pro</span>
+                                <i class="bi bi-check-circle-fill fs-5"></i>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Inserimento Email -->
+                    <label class="form-label fw-bold small text-muted text-uppercase mb-2">2. La tua Email di Sviluppo:</label>
+                    <div class="d-flex flex-column flex-sm-row gap-2">
+                        <input type="email" name="email" class="form-control input-email flex-grow-1" required placeholder="sviluppatore@azienda.com">
+                        <button type="submit" class="btn btn-emerald text-nowrap px-4 py-3">Richiedi Chiave Ora <i class="bi bi-arrow-right ms-1"></i></button>
+                    </div>
+                    <p class="text-muted mt-3 mb-0 text-center" style="font-size: 0.8rem;"><i class="bi bi-lock-fill me-1"></i> I tuoi dati sono al sicuro. Non inviamo spam, solo codice di sicurezza.</p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Accordion -->
+    <div class="container py-5 my-5">
+        <h2 class="section-title text-center mb-5">Domande Frequenti (FAQ)</h2>
+        <div class="accordion max-w-2xl mx-auto" id="accordionFAQ" style="max-width: 700px;">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                        Serve inserire la carta di credito per iniziare con il Piano Free?
+                    </button>
+                </h2>
+                <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                    <div class="accordion-body text-muted small">
+                        Assolutamente no. Il piano Free è gratuito per sempre fino a 50.000 richieste e ti permette di testare la nostra libreria nel tuo ambiente locale o di staging senza alcun vincolo economico.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                        Quanto tempo richiede l'installazione di Scudo WAF nelle mie API?
+                    </button>
+                </h2>
+                <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                    <div class="accordion-body text-muted small">
+                        Esattamente 30 secondi. Ti basta installare il pacchetto ufficiale tramite <code>pip install scudo-waf</code> e aggiungere la riga del middleware alla tua applicazione FastAPI, Flask o Django passando la tua chiave API.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                        Cosa succede se il server AI esterno o la mia rete vanno in timeout?
+                    </button>
+                </h2>
+                <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                    <div class="accordion-body text-muted small">
+                        Nessun problema. Scudo WAF è costruito con una garanzia di <strong>Fail-Open</strong>. Se l'ispezione AI di Livello 3 dovesse subire ritardi di rete, il middleware lascia passare le richieste legittime senza bloccare i tuoi utenti reali, mentre il Livello 1 locale continua a proteggerti in RAM contro gli attacchi base.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script per la selezione rapida del piano dal bottone -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function scegliPiano(piano) {
+            // Seleziona il radio button corrispondente nel form
+            if(piano === 'pro') {
+                document.getElementById('piano_pro').checked = true;
+            } else {
+                document.getElementById('piano_free').checked = true;
+            }
+            // Fai uno scorrimento morbido verso il form
+            document.getElementById('form-iscrizione').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
 </html>
