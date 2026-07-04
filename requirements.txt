@@ -1,9 +1,10 @@
 fastapi
-uvicorn
-httpx
+uvicorn[standard]
+jinja2
 python-multipart
-pydantic[email]
+pydantic
+email-validator
+httpx
 python-dotenv
 certifi
-scudo-waf
 cachetools
